@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 
   try {
     // Forward the JSON payload to your Apps Script endpoint
-    const response = await fetch('https://script.google.com/macros/s/AKfycbxXstRY0xT2yzGHUyaXx37-6C897eP_XgWIqom1ZA1q5Or2i6GJyzlpQufcBteROiZU/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbydfIdwRDP_9SfyNFe8-29CK3WJ9tORAn0Ms94fWN8qokJO5o9ExCgC_3w0yVB933zV/exec', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
