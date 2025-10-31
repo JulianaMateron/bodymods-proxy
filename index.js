@@ -12,7 +12,7 @@ app.post('/submit', async (req, res) => {
     const formData = qs.stringify(req.body); // Convert to URL-encoded
 
     const response = await axios.post(
-      'https://script.google.com/macros/s/AKfycbxP_ejbuGhTSYMn_cYeaJy1Obab-c5Hzyed_3BMlQWCMZcUPFxmrPBUxHS7OjtmcTI_/exec',
+      'https://script.google.com/macros/s/AKfycbysdtoIkPcyo7EA_od7IuJY38-XqBQqmOTcu754vlqaBx7A7GlL0i53imS0C7vmgN6Q/exec',
       formData,
       { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
     );
