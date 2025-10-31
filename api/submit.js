@@ -1,25 +1,39 @@
 export default async function handler(req, res) {
-    console.log("🔍 Incoming request method:", req.method);
-  console.log("📦 Incoming request headers:", req.headers);
-  console.log("🧾 Incoming request body:", req.body);
-  if (req.method !== 'POST') {
-    return res.status(405).send('Method Not Allowed');
+  console.log("Incoming request method:", req.method);
+  console.log("Incoming request headers:", req.headers);
+  console.log("Incoming request body:", req.body);
+
+  // Handle CORS preflight
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', 'https://bodymods.ca');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.status(204).end();
+    return;
   }
 
-  try {
-    // Forward the JSON payload to your Apps Script endpoint
-    const response = await fetch('https://script.google.com/macros/s/AKfycbydfIdwRDP_9SfyNFe8-29CK3WJ9tORAn0Ms94fWN8qokJO5o9ExCgC_3w0yVB933zV/exec', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(req.body)
-    });
+  // Handle POST requests
+  if (req.method === 'POST') {
+    try {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbydfIdwRDP_9SfyNFe8-29CK3WJ9tORAn0Ms94fWN8qokJO5o9ExCgC_3w0yVB933zV/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(req.body)
+      });
 
-    const result = await response.text();
-    res.status(200).send(result);
-  } catch (error) {
-    console.error('Proxy error:', error);
-    res.status(500).send('Proxy forwarding failed');
+      const text = await response.text();
+
+      res.setHeader('Access-Control-Allow-Origin', 'https://bodymods.ca');
+      res.status(200).send(text);
+    } catch (err) {
+      res.setHeader('Access-Control-Allow-Origin', 'https://bodymods.ca');
+      res.status(500).send('Proxy error: ' + err.message);
+    }
+  } else {
+    // Reject other methods
+    res.setHeader('Access-Control-Allow-Origin', 'https://bodymods.ca');
+    res.status(405).send('Method Not Allowed');
   }
 }
