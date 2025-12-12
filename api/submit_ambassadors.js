@@ -15,6 +15,33 @@ export default async function handler(req, res) {
   // Handle POST requests
   if (req.method === 'POST') {
     try {
+      // 1. Extract the reCAPTCHA token from the request body
+      const token = req.body.recaptcha;
+
+      if (!token) {
+        res.setHeader('Access-Control-Allow-Origin', 'https://bodymods.ca');
+        return res.status(400).send('Missing reCAPTCHA token');
+      }
+
+        // 2. Verify with Google using Secret Key
+        const verifyRes = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            secret: process.env.RECAPTCHA_SECRET_KEY, // keep this in env
+            response: token
+          })
+        });
+
+        const verifyData = await verifyRes.json();
+        console.log("reCAPTCHA verify result:", verifyData);
+
+        if (!verifyData.success) {
+          res.setHeader('Access-Control-Allow-Origin', 'https://bodymods.ca');
+          return res.status(403).send('Failed reCAPTCHA verification');
+        }
+
+      // 3. If reCAPTCHA passes, forward to Google Apps Script
       const response = await fetch('https://script.google.com/macros/s/AKfycbyUTlPPjugJc6VO3gT4jJDvBMLyvma8dc2MTnTc7iSq9Jt77p8Ub1z4GpFrfXFZ9v7drw/exec', {
         method: 'POST',
         headers: {
