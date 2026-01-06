@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   // Handle POST requests
   if (req.method === 'POST') {
     try {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbzeVQwZN2PUyoFj-5mgU5gcEE7d487AB0WGtvVxZZF2IKRmMIw9Ji0Skf-sxkzvmobnJA/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbwg5k_4ukRV_AKYOrs6vxZ72YsuVtVrWrAd3o6-RNU5yOStarJk6X0RQ1556zH8Y0JC3Q/exec', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
