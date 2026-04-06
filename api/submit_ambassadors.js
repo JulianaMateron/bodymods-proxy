@@ -42,7 +42,7 @@ export default async function handler(req, res) {
         }
 
       // 3. If reCAPTCHA passes, forward to Google Apps Script
-      const response = await fetch('https://script.google.com/macros/s/AKfycbwsxm-Lu1KDBoGLAD-yB-QkK7EgiE4wfkTV2c5N83IysG6hFyDaiKCjv88pvz9DBsIlnA/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbybxtTJy4thMvpuzOb1DXYhJArDSSIiUO_ngW7HhFocvINHBFea7l82B6NDd1qLjBFDnw/exec', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
