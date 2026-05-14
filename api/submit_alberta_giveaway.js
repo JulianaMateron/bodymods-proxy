@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       // FORWARD DATA TO GOOGLE APPS SCRIPT
-      const response = await fetch('https://script.google.com/macros/s/AKfycbxsjzwq4b9gz2CzDAcsCIyXBvYfq3rAjOft0oB_zx7YO6ADXPECRH7vCYwqfZWc996Q/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbw1iJokmfk1aXWBr7qqht8l7BZnp5dPrj9nZrFtJCvSx6MHv294GcXa6dBjtHEsS6Jq/exec', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(req.body)
